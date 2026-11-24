@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GesturePuzzle — Hand-Controlled Photo Puzzle</title>
+</head>
+<body>
+  <div id="app">
+    <!-- Hidden video element for webcam -->
+    <video id="webcam" autoplay playsinline></video>
+
+    <!-- Main rendering canvas -->
+    <canvas id="mainCanvas"></canvas>
+
+    <!-- UI overlay -->
+    <div id="overlay">
+      <!-- Gesture hint banner (shadcn Badge, rendered by React) -->
+      <div id="hint-root"></div>
+    </div>
+
+    <!-- Glass status bubbles (React): puzzle timer / pieces / moves, and the review-screen title -->
+    <div id="hud-root"></div>
+    <div id="title-root"></div>
+
+    <!-- Difficulty chips, shown during the puzzle (shadcn Badges, rendered by React) -->
+    <div id="difficulty-chips" class="hidden"></div>
+
+    <!-- Completion screen (shadcn Card, rendered by React) -->
+    <div id="completion-screen" class="screen hidden"></div>
+
+    <!-- Cursor layer: sits above the difficulty/completion screens so hands stay visible -->
+    <canvas id="cursorCanvas"></canvas>
+  </div>
+
+  <script type="module" src="/src/entry.jsx"></script>
+</body>
+</html>

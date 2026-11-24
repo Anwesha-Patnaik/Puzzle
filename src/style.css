@@ -1,0 +1,123 @@
+/* ===== Base (reset comes from Tailwind preflight) ===== */
+/* Glass text is dark on the light screens and white over the live camera view (body.on-video, set by main.js) */
+:root { --glass-text: #171717; }
+body.on-video { --glass-text: #ffffff; }
+
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: #ffffff;
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  color: #171717;
+}
+
+#app {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+}
+
+/* ===== Webcam (invisible, used as source) =====
+   Kept at a real size and nearly-but-not-fully transparent: browsers (Safari especially)
+   stop decoding frames for 1px / fully hidden videos, which made tracking drop. */
+#webcam {
+  position: absolute;
+  top: 0; left: 0;
+  width: 320px; height: 180px;
+  opacity: 0.01;
+  pointer-events: none;
+  z-index: -1;
+}
+
+/* ===== Cursor layer (above screens) ===== */
+#cursorCanvas {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 30;
+}
+
+/* ===== Main Canvas ===== */
+#mainCanvas {
+  display: block;
+  width: 100vw;
+  height: 100vh;
+  background: #ffffff;
+}
+
+/* ===== Overlay ===== */
+#overlay {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  pointer-events: none;
+  z-index: 10;
+}
+
+/* ===== Glassmorphism: frosted, see-through panels (same recipe for every bubble) ===== */
+.glass {
+  background: rgba(255, 255, 255, 0.2);
+  -webkit-backdrop-filter: blur(24px) saturate(160%);
+  backdrop-filter: blur(24px) saturate(160%);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  box-shadow:
+    0 8px 32px rgba(31, 38, 135, 0.14),   /* soft lift */
+    0 0 0 1px rgba(0, 0, 0, 0.04),        /* hairline so the edge still reads on a white page */
+    inset 0 1px 0 rgba(255, 255, 255, 0.7); /* light catching the top edge */
+  color: var(--glass-text);
+  transition: opacity 0.3s, transform 0.15s, background 0.15s, border-color 0.15s;
+}
+
+/* White text over the busy camera picture needs a little help to stay readable */
+body.on-video .glass { text-shadow: 0 1px 8px rgba(0, 0, 0, 0.35); }
+
+/* ===== Status bubbles (puzzle HUD, review title) ===== */
+#hud {
+  position: fixed;
+  top: 16px;
+  left: 20px;
+  z-index: 25;
+  pointer-events: none;
+}
+#title-pill {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 25;
+  pointer-events: none;
+}
+
+/* ===== Difficulty chips (shown during the puzzle) ===== */
+#difficulty-chips {
+  position: fixed;
+  top: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 25;
+  display: flex;
+  gap: 8px;
+}
+
+/* ===== Screens (completion) ===== */
+.screen {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255,255,255,0.35);
+  /* no full-screen backdrop-filter: blurring a canvas that repaints every frame is slow in Safari; only the small bubbles blur */
+  z-index: 20;
+  transition: opacity 0.3s;
+}
+
+/* ===== Utility ===== */
+.hidden {
+  display: none !important;
+}
