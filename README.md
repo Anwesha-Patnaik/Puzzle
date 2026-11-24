@@ -2,6 +2,8 @@
 
 A hands-free photo puzzle that runs in the browser. Frame a photo with both hands, hold steady to capture it, then solve it as a jigsaw by pinching and dragging pieces. Hand tracking uses MediaPipe and runs entirely on your device, with no backend.
 
+Live demo: https://gesture-puzzle.vercel.app
+
 ## Run it
 
 Requires Node.js 18 or newer, a webcam, and a Chromium-based browser or Safari.
